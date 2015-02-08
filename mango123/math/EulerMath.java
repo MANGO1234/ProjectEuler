@@ -299,6 +299,24 @@ public final class EulerMath {
 	public static boolean isSquare(long num) {
 		return Math.sqrt(num) % 1 == 0; //optimize someday...
 	}
+
+	/**
+	 * Return n^pow using fast exponentiation. Doesn't do any overflow check.
+	 * @param n
+	 * @param pow
+	 * @return n^pow
+	 */
+	public static long pow(long n, int pow) {
+		long temp = 1;
+		while (pow != 0) {
+			if ((pow & 1) == 1) {
+				temp = (temp * n);
+			}
+			n = n * n;
+			pow >>= 1;
+		}
+		return temp;
+	}
 	
 	//**************************************************************************************************
 	//**********************************************Primes**********************************************
