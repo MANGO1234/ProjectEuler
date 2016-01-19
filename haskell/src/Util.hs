@@ -44,3 +44,9 @@ kmergeiBySort comp = kmergeii
 
 cross :: (a -> b -> c) -> [a] -> [b] -> [[c]]
 cross f as bs = fmap (\a -> fmap (f a) bs) as
+
+unfoldl :: (a -> Maybe (b, a)) -> a -> [b]
+unfoldl f = helper
+    where helper x = case f x of
+            Nothing -> []
+            Just (n, x) -> n:helper x
