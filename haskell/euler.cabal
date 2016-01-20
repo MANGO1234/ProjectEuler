@@ -15,7 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     PrimeUtil, Time, Util
+  exposed-modules:     PrimeUtil, Time, Util, NumberUtil
   build-depends:       base
                        , array
                        , vector
