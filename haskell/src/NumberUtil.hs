@@ -15,6 +15,19 @@ instance HasDigit Int where
 instance HasDigit Integer where
     numberOfDigits n = let k = toInteger n in if n == 0 then 1 else fromJust . findIndex (>k) $ p10
 
+-- repurposed from prelude
+powmod :: Int -> Int -> Int -> Int
+powmod n x m
+        | x < 0    = error "Negative exponent"
+        | x == 0   = 1
+        | otherwise = f n x
+    where
+          f x y | even y    = f (mod (x * x) m) (y `quot` 2)
+                | y == 1    = x
+                | otherwise = g (mod (x * x) m) ((y - 1) `quot` 2) x
+          g x y z | even y = g (mod (x * x) m) (y `quot` 2) z
+                  | y == 1 = mod (x * z) m
+                  | otherwise = g (mod (x * x) m) ((y - 1) `quot` 2) (mod (x * z) m)
 
 linearDiophantine :: Int -> Int -> Int -> Maybe (Int, Int)
 linearDiophantine x' y' z = if z `mod` gcd == 0 then Just ans else Nothing
