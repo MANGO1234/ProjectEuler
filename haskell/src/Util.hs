@@ -50,3 +50,10 @@ unfoldl f = helper
     where helper x = case f x of
             Nothing -> []
             Just (n, x) -> n:helper x
+
+groupToSingle :: (Eq a) => [a] -> [a]
+groupToSingle [] = []
+groupToSingle xs = head xs:helper (tail xs) (head xs)
+    where
+        helper [] _ = []
+        helper (x:xs) last = if x == last then helper xs last else x:helper xs x
