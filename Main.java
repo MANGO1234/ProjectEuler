@@ -9,10 +9,10 @@ public class Euler {
 
 		long sum = 0;
 		for (int i = 1; i <= 9; i++) {
-			long k = s(i);
-			System.out.println(i+": "+k);
-			sum += k;
-		}
+            long k = s(i);
+            System.out.println(i+": "+k);
+            sum += k;
+        }
 		System.out.println("sum: " + sum);
 
 		long END = System.currentTimeMillis();
