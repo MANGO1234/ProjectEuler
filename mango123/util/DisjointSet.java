@@ -15,16 +15,22 @@ public class DisjointSet<T> {
 		private Node<T> parent;
 		private T value;
 		private int rank;
+        private int size;
 
-		private Node(T value) {
-			this.value = value;
-			this.parent = this;
-			rank = 0;
-		}
+        private Node(T value) {
+            this.value = value;
+            this.parent = this;
+            rank = 0;
+            size = 1;
+        }
 
 		public T getValue() {
 			return value;
 		}
+
+        public int getSize() {
+            return size;
+        }
 
 		@Override
 		public String toString() {
@@ -77,18 +83,19 @@ public class DisjointSet<T> {
 		// merge, point every element in set y to sex
 		if (px.rank < py.rank) {
 			px.parent = py;
-			sets.remove(px);
-		}
-		else if (py.rank < px.rank) {
-			py.parent = px;
-			sets.remove(py);
-		}
-		else {
-			py.parent = px;
-			sets.remove(py);
-			px.rank++;
-		}
-	}
+            sets.remove(px);
+            py.size += px.size;
+        } else if (py.rank < px.rank) {
+            py.parent = px;
+            sets.remove(py);
+            px.size += py.size;
+        } else {
+            py.parent = px;
+            sets.remove(py);
+            px.size += py.size;
+            px.rank++;
+        }
+    }
 
 	/**
 	 * Find the set x belongs to, or null if x is not in the disjoint-set.
