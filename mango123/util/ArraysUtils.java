@@ -785,6 +785,330 @@ public class ArraysUtils {
 		return arr;
 	}
 
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(int[] arr, int element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(long[] arr, long element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(char[] arr, char element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(short[] arr, short element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(byte[] arr, byte element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(boolean[] arr, boolean element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(float[] arr, float element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static int indexOf(double[] arr, double element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @param index positive int, start looking at that index
+     * @return the original array
+     */
+    public static <T> int indexOf(T[] arr, T element, int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index < 0");
+        }
+        for (int i = index; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(int[] arr, int element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(long[] arr, long element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(char[] arr, char element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(short[] arr, short element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(byte[] arr, byte element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(boolean[] arr, boolean element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(float[] arr, float element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static int indexOf(double[] arr, double element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Find index of element in array. Return -1 if not found.
+     *
+     * @param arr array
+     * @param element element to look for
+     * @return the original array
+     */
+    public static <T> int indexOf(T[] arr, T element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 	// temp
 	public static long max(long[] arr) {
 		long k = arr[0];

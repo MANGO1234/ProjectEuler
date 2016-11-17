@@ -1,4 +1,6 @@
-public class EulerMain {
+package problems;
+
+public class P188 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
