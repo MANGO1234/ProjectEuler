@@ -1,6 +1,8 @@
+package problems;
+
 import mango123.util.DisjointSet;
 
-public class EulerMain {
+public class P186 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
         int[] n = new int[5000000 + 1];
@@ -41,3 +43,4 @@ public class EulerMain {
         System.out.println("Time: " + (END - START) + "ms");
     }
 }
+
