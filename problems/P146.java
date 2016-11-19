@@ -1,3 +1,5 @@
+package problems;
+
 import mango123.util.ArraysUtils;
 
 import java.math.BigInteger;
@@ -5,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EulerMain {
+public class P146 {
+
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
