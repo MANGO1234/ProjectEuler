@@ -1,8 +1,8 @@
 def subsets(xs):
     a = [[]]
     for x in xs:
-        b = list(map(lambda aa: aa[:], a))
-        for s in b:
+        for i in range(0, len(a)):
+            s = a[i][:]
             s.append(x)
             a.append(s)
     return a
