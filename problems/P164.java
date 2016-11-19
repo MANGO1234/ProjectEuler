@@ -1,4 +1,6 @@
-public class EulerMain {
+package problems;
+
+public class P164 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
@@ -38,9 +40,9 @@ public class EulerMain {
                     for (int l = 0; l < 100; l++) {
                         if (v[j][k]) {
                             t16[i][l] += t8[i][j] * t8[k][l];
-                            }
                         }
                     }
+                }
             }
         }
         long[][] t20 = new long[100][100];
@@ -75,4 +77,5 @@ public class EulerMain {
         int d = m2 % 10;
         return a + b + c <= 9 && b + c + d <= 9;
     }
+
 }
