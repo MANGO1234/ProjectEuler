@@ -1,4 +1,4 @@
-package problems;
+package problems.java;
 
 public class P188 {
     public static void main(String[] args) {
