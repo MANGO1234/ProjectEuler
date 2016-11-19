@@ -51,16 +51,13 @@ public final class EulerMath {
 	public static long nCr(int n, int r) {
 		int difference = n - r;
 		if (difference > r) {
-			int temp = difference;
 			difference = r;
-			r = temp;
 		}
-		long product = n;
-		n--; // this sets it up so product /= i always work in loop
-		for (int i = 2; i <= difference; ++i, --n) {
-			product *= n;
-			product /= i;
-		}
+        long product = 1;
+        for (int i = 1; i <= difference; ++i, --n) {
+            product *= n;
+            product /= i;
+        }
 		return product;
 	}
 	
