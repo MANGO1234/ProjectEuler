@@ -3,6 +3,7 @@ package mango123.util;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -1125,4 +1126,28 @@ public class ArraysUtils {
 		}
 		return k;
 	}
+
+    public static long product(int[] arr) {
+        long n = 1;
+        for (int i = 0; i < arr.length; i++) {
+            n *= arr[i];
+        }
+        return n;
+    }
+
+    public static long product(long[] arr) {
+        long n = 1;
+        for (int i = 0; i < arr.length; i++) {
+            n *= arr[i];
+        }
+        return n;
+    }
+
+    public static boolean[] intListToBool(int m, List<Integer> ns) {
+        boolean[] w = new boolean[m];
+        for (int i = 0; i < ns.size(); i++) {
+            w[ns.get(i)] = true;
+        }
+        return w;
+    }
 }
