@@ -1,4 +1,4 @@
-package problems;
+package problems.java;
 
 public class P164 {
     public static void main(String[] args) {
