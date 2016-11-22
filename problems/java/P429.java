@@ -1,7 +1,9 @@
+package problems.java;
+
 import mango123.math.EratosthenesSieve;
 import mango123.math.EulerMath;
 
-public class EulerMain {
+public class P429 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
