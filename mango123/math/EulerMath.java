@@ -314,20 +314,40 @@ public final class EulerMath {
 		}
 		return temp;
 	}
-	
-	//**************************************************************************************************
-	//**********************************************Primes**********************************************
-	//**************************************************************************************************
-	
-	public static boolean[] primesUpToRawFormat(int n) {
-		boolean[] isPrime = new boolean[n + 1];
-		Arrays.fill(isPrime, true);
-		isPrime[0] = false;
-		isPrime[1] = false;
-		
-		for (int i = 4, len = n + 1; i <= len; i += 2) {
-			isPrime[i] = false;
-		}
+
+    /**
+     * Return n^pow mod m using fast exponentiation. Doesn't do any overflow check.
+     *
+     * @param n
+     * @param pow
+     * @param m
+     * @return n^pow mod m
+     */
+    public static long powMod(long n, int pow, int m) {
+        long temp = 1;
+        while (pow != 0) {
+            if ((pow & 1) == 1) {
+                temp = (temp * n) % m;
+            }
+            n = n * n % m;
+            pow >>= 1;
+        }
+        return temp;
+    }
+
+    //**************************************************************************************************
+    //**********************************************Primes**********************************************
+    //**************************************************************************************************
+
+    public static boolean[] primesUpToRawFormat(int n) {
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = false;
+        isPrime[1] = false;
+
+        for (int i = 4, len = n + 1; i <= len; i += 2) {
+            isPrime[i] = false;
+        }
 
 		for (int i = 2, bound = (int) Math.sqrt(n); ++i <= bound;) {
 			if (isPrime[i] == true) {
