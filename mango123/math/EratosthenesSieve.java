@@ -80,18 +80,20 @@ public class EratosthenesSieve implements PrimeSearcher {
 		//otherwise, test primality using .testLargeNumber()
 		else return testLargeNumber(n);
 	}
-	
-	/**
-	 * Increase the sieve's size up to n.
-	 * 
-	 * This is pretty inefficient as it creates a new sieve of n to replace the internal sieve.
-	 * @param n if n is smaller than the sieve's current size, this method does nothing
-	 */
-	@Override
-	public void expandSearchUpTo(int n) {
-		if (n <= sieveSize) return;
-		createSieveOfSize(n);
-	}
+
+    /**
+     * Increase the sieve's size up to n.
+     * <p>
+     * This is pretty inefficient as it creates a new sieve of n to replace the internal sieve.
+     *
+     * @param n if n is smaller than the sieve's current size, this method does nothing
+     */
+    @Override
+    public void expandSearchUpTo(int n) {
+        if (n <= sieveSize)
+            return;
+        createSieveOfSize(n);
+    }
 
 
 	/**
