@@ -1,6 +1,8 @@
+package problems.java;
+
 import mango123.math.EratosthenesSieve;
 
-public class EulerMain {
+public class P357 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
         EratosthenesSieve sieve = new EratosthenesSieve(100000000);
@@ -53,4 +55,5 @@ public class EulerMain {
         long END = System.currentTimeMillis();
         System.out.println("Time: " + (END - START) + "ms");
     }
+
 }
