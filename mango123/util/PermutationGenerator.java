@@ -1,4 +1,5 @@
 package mango123.util;
+
 import java.math.BigInteger;
 
 /**
@@ -24,21 +25,45 @@ public class PermutationGenerator {
 	 */
 	public PermutationGenerator (int n) {
 		if (n < 1 && n > 20) {	throw new IllegalArgumentException ("PermutationGenerator can only accept argument n >= 1 && n <=20");    }
-	    a = new int[n];
-	    total = getFactorial (n);
-	}
+        total = getFactorial(n);
+        initialize(n);
+    }
 
-	
-	public void reset () {
-	    for (int i = 0; i < a.length; i++) {
-	        a[i] = i;
-	    }
-	    numLeft = new BigInteger (total.toString ());
-	}
+    /**
+     * Creates a PermutationGenerator with a list of unique integers
+     *
+     * @param arr list of unique integers
+     */
+    public PermutationGenerator(int[] arr) {
+        if (arr.length < 1 && arr.length > 20) {
+            throw new IllegalArgumentException("PermutationGenerator can only accept argument arr.length >= 1 && arr.length <=20");
+        }
+        total = getFactorial(arr.length);
+        initialize(arr);
+    }
 
-	  //------------------------------------------------
-	  // Return number of permutations not yet generated
-	  //------------------------------------------------
+    private void initialize(int n) {
+        a = new int[n];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = i;
+        }
+        numLeft = new BigInteger(total.toString());
+    }
+
+    //------------------------------------------------
+    // Reset with a unique list of numbers for permutation
+    //------------------------------------------------
+    private void initialize(int[] arr) {
+        a = ArraysUtils.sortAndRemoveDuplicates(arr);
+        if (a.length != arr.length) {
+            throw new IllegalArgumentException("Need unique list of numbers");
+        }
+        numLeft = new BigInteger(total.toString());
+    }
+
+    //------------------------------------------------
+    // Return number of permutations not yet generated
+    //------------------------------------------------
 
 	  public BigInteger getNumLeft () {
 	    return numLeft;
