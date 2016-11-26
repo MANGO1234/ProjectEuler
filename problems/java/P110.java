@@ -1,6 +1,8 @@
+package problems.java;
+
 import mango123.math.EratosthenesSieve;
 
-public class EulerMain {
+public class P110 {
 
     private static long n;
 
