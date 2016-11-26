@@ -53,8 +53,11 @@ public class PrimesUtil {
 
         //if it's within range of primeSearcher and is a prime (so as not to trigger an expensive call from
         //.isPrime() or smaller than 2
-        if ((num < primeRange && primeSearcher.isPrime((int) num)) || num < 2)
+        if ((num < primeRange && primeSearcher.isPrime((int) num))) {
+            return new long[] { num };
+        } else if (num < 2) {
             return new long[0];
+        }
 
 		makeSureThereIsEnoughPrimeToDoPrimalityTest(num);
 
@@ -97,8 +100,11 @@ public class PrimesUtil {
 
         //if it's within range of primeSearcher and is a prime (so as not to trigger an expensive call from
         //.isPrime() or smaller than 2
-        if ((num < primeRange && primeSearcher.isPrime((int) num)) || num < 2)
+        if ((num < primeRange && primeSearcher.isPrime((int) num))) {
+            return new long[] { num };
+        } else if (num < 2) {
             return new long[0];
+        }
 
 		makeSureThereIsEnoughPrimeToDoPrimalityTest(num);
 
