@@ -1,3 +1,5 @@
+package problems.java;
+
 import mango123.math.EratosthenesSieve;
 
 import java.util.ArrayList;
@@ -6,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class EulerMain {
+public class P118 {
     static EratosthenesSieve sieve = new EratosthenesSieve(100000000);
     static Set<String> set = new HashSet<>();
 
