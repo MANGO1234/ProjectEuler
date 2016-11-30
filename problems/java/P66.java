@@ -1,13 +1,17 @@
+package problems.java;
+
 import mango123.math.BigRational;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EulerMain {
+public class P66 {
+
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
+        // just implemented sqrt's continued fraction's as described on wikipedia
         BigInteger max = BigInteger.ZERO;
         int answer = 0;
         for (int i = 2; i <= 1000; i++) {
@@ -48,4 +52,5 @@ public class EulerMain {
         long END = System.currentTimeMillis();
         System.out.println("Time: " + (END - START) + "ms");
     }
+
 }
