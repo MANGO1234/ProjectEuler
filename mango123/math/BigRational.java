@@ -7,17 +7,20 @@ import java.math.BigInteger;
  * The rational will always be in lowest reduced form.
  */
 public final class BigRational implements Comparable<BigRational> {
-	final public BigInteger num;
-	final public BigInteger den;
+    final public static BigRational ONE = BigRational.valueOf(1);
 
-	/**
-	 * Constructs a rational number with the given numerator and denominator.
-	 * @param numerator
-	 * @param denominator
-	 */
-	public BigRational(long numerator, long denominator) {
-		this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
-	}
+    final private BigInteger num;
+    final private BigInteger den;
+
+    /**
+     * Constructs a rational number with the given numerator and denominator.
+     *
+     * @param numerator
+     * @param denominator
+     */
+    public BigRational(long numerator, long denominator) {
+        this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
+    }
 
 	/**
 	 * Constructs a rational number with the given numerator and denominator.
@@ -34,7 +37,23 @@ public final class BigRational implements Comparable<BigRational> {
 		BigInteger a = numerator.gcd(denominator);
 		den = denominator.divide(a);
 		num = numerator.divide(a);
-	}
+    }
+
+    public static BigRational valueOf(BigInteger n) {
+        return new BigRational(n, BigInteger.ONE);
+    }
+
+    public static BigRational valueOf(long n) {
+        return new BigRational(BigInteger.valueOf(n), BigInteger.ONE);
+    }
+
+    public BigInteger getNumerator() {
+        return num;
+    }
+
+    public BigInteger getDenominator() {
+        return den;
+    }
 
 	public BigRational inverse() {
 		return new BigRational(den, num);
@@ -46,19 +65,19 @@ public final class BigRational implements Comparable<BigRational> {
 
 	public BigRational add(BigRational rat) {
 		return new BigRational(this.num.multiply(rat.den).add(rat.num.multiply(this.den)), this.den.multiply(rat.den));
-	}
+    }
 
-	public BigRational sub(BigRational rat) {
-		return new BigRational(this.num.multiply(rat.den).subtract(rat.num.multiply(this.den)), this.den.multiply(rat.den));
-	}
+    public BigRational subtract(BigRational rat) {
+        return new BigRational(this.num.multiply(rat.den).subtract(rat.num.multiply(this.den)), this.den.multiply(rat.den));
+    }
 
-	public BigRational mul(BigRational rat) {
-		return new BigRational(rat.num.multiply(this.num), rat.den.multiply(this.den));
-	}
+    public BigRational multiply(BigRational rat) {
+        return new BigRational(rat.num.multiply(this.num), rat.den.multiply(this.den));
+    }
 
-	public BigRational div(BigRational rat) {
-		return new BigRational(this.num.multiply(rat.den), this.den.multiply(rat.num));
-	}
+    public BigRational divide(BigRational rat) {
+        return new BigRational(this.num.multiply(rat.den), this.den.multiply(rat.num));
+    }
 
 
 	@Override
