@@ -1,6 +1,8 @@
+package problems.java;
+
 import mango123.math.EulerMath;
 
-public class EulerMain {
+public class P86 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
