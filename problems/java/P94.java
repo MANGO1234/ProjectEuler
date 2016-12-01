@@ -1,6 +1,8 @@
+package problems.java;
+
 import static mango123.math.EulerMath.isSquare;
 
-public class EulerMain {
+public class P94 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
@@ -66,7 +68,6 @@ public class EulerMain {
             i++;
         }
         System.out.println(sum);
-
 
         long END = System.currentTimeMillis();
         System.out.println("Time: " + (END - START) + "ms");
