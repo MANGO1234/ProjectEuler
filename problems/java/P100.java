@@ -1,10 +1,12 @@
+package problems.java;
+
 import mango123.math.BigRational;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EulerMain {
+public class P100 {
     public static void main(String[] args) {
         final long START = System.currentTimeMillis();
 
