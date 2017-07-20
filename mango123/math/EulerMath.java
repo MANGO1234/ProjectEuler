@@ -323,16 +323,17 @@ public final class EulerMath {
      * @param m
      * @return n^pow mod m
      */
-    public static long powMod(long n, int pow, int m) {
-        long temp = 1;
+    public static int powMod(int n, long pow, int m) {
+        long ans = 1;
+        long temp = n;
         while (pow != 0) {
             if ((pow & 1) == 1) {
-                temp = (temp * n) % m;
+                ans = (ans * temp) % m;
             }
-            n = n * n % m;
+            temp = temp * temp % m;
             pow >>= 1;
         }
-        return temp;
+        return (int) ans;
     }
 
     //**************************************************************************************************
