@@ -6,3 +6,6 @@ stack.yaml
 out/
 *.class
 __pycache__
+cython/*.pyd
+cython/*.c
+cython/build
