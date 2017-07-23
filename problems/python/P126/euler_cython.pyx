@@ -14,8 +14,8 @@ cdef int t[100000 + 1]
 memset(t, 0, sizeof(t))
 
 for a in range(1, LIMIT + 1):
-    for b in range(1, min(LIMIT // a, a) + 1):
-        for c in range(1, min((LIMIT - 2 * a * b) // (a + b), b) + 1):
+    for b in range(1, min(LIMIT / a, a) + 1):
+        for c in range(1, min((LIMIT - 2 * a * b) / (a + b), b) + 1):
             cur = 2 * (a * b + b * c + a * c)
             i = 0
             while cur <= LIMIT:
