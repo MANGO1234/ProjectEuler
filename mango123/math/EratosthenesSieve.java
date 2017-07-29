@@ -134,9 +134,11 @@ public class EratosthenesSieve implements PrimeSearcher {
     public int[] toArray() {
         int[] primes = new int[numOfPrimesInSieve];
         primes[0] = 2;
-        for (int i = 0, len = sieve.length, count = 0; i < len; ++i) {
-            if (sieve[i])
-                primes[++count] = (i << 1) + 3;
+        int len = sieve.length, count = 1;
+        for (int i = 0; i < len; ++i) {
+            if (sieve[i]) {
+                primes[count++] = (i << 1) + 3;
+            }
         }
         return primes;
     }
@@ -147,13 +149,12 @@ public class EratosthenesSieve implements PrimeSearcher {
         sieve = new boolean[len]; //no even number will be in the array to save space
         Arrays.fill(sieve, true);
 
-        //Start sieving, if u don't know how the sieve works, search it up
         //Optimizations include:
         // - starts off at i * i while sieving (small gain in speed)
         // - no multiples of 2 (respectable gain, not only in speed, but also in memory)
         //***note*** all the +3, -3, *2, /2 etc. is to account for using indexes to represent odd numbers
         for (int i = 0, bound = (((int) Math.sqrt(size)) >> 1) - 1 /* bound as in the array's bound */; i <= bound; ++i) {
-            if (sieve[i] == true) {
+            if (sieve[i]) {
                 for (int skip = (i << 1) + 3, j = (skip * skip - 3) >> 1; j < len; j += skip) {
                     sieve[j] = false;
                 }
@@ -165,18 +166,17 @@ public class EratosthenesSieve implements PrimeSearcher {
         countPrimes();
     }
 
-    //count how many primes is in the sieve. Use in the constructor and .createSieveOfSize().
-    //lastCountPostion is used so we don't have to re-count already counted region when .expandSearchUpTo()
-    //is used
+    // count how many primes is in the sieve. Use in the constructor and .createSieveOfSize().
+    // lastCountPostion is used so we don't have to re-count already counted region when .expandSearchUpTo()
+    // is used
     private int lastCountPosition = 0;
 
     private void countPrimes() {
-        int count = 0,
-                len = sieve.length;
-
+        int count = 0, len = sieve.length;
         for (int i = lastCountPosition; i < len; ++i) {
-            if (sieve[i])
+            if (sieve[i]) {
                 ++count;
+            }
         }
         lastCountPosition = len;
         numOfPrimesInSieve += count;
@@ -192,8 +192,9 @@ public class EratosthenesSieve implements PrimeSearcher {
 
         int bound = (((int) Math.sqrt(number) + 1) >> 1) - 1;
         for (int i = 0; i < bound; ++i) {
-            if (sieve[i] && (number % ((i << 1) + 3)) == 0)
+            if (sieve[i] && (number % ((i << 1) + 3)) == 0) {
                 return false;
+            }
         }
         return true;
     }
@@ -201,120 +202,25 @@ public class EratosthenesSieve implements PrimeSearcher {
     //*******************************************************************************************************
     //**********************************************Iteration************************************************
     //*******************************************************************************************************
-    //this holds the informations for the iterator methods
-    // * currentPrime: the current prime the iteration cursor is on
-    // * Index: index the current prime is in the boolean array. Index represents 2 when it's -1.
-    // * NthPrime: the current prime's number (1 -> 1st prime, 2 -> end prime etc.)
-    private int currentPrime = 0,
-            currentPrimeIndex = -2,
-            currentNthPrime = 0;
 
-    /**
-     * Returns the next prime in the sieve. It's an iterator along with .previousPrime().
-     * <p>
-     * Using them is more efficient than .nthPrime(int n) if you are accessing the primes array a lot.
-     * <p>
-     * Other methods related to this includes .currentIndexOfPrime() and .currentPrime().
-     * <p>
-     * Note: if you use .previousPrime() until the beginning of the sieve (the method will return -1) and then
-     * call this, the first prime (2) will be returned.
-     *
-     * @return the next prime. This is -1 if the end of the sieve had been reached
-     */
+    private int currentPrimeIndex;
+
+    @Override
+    public int firstPrime() {
+        currentPrimeIndex = -1;
+        return 2;
+    }
+
     @Override
     public int nextPrime() {
-        int len = sieve.length;
-
-        //if it's at the beginning of iteration (currentPrimeIndex < -1), return 2
-        if (currentPrimeIndex < -1) {
-            currentPrimeIndex = -1;
-            currentNthPrime = 1;
-            return 2;
+        if (currentPrimeIndex >= sieve.length) {
+            return -1;
         }
-
-        //else if there is still possible primes left (currentPrimeIndex < len),
-        //search for it down the sieve
-        else if (currentPrimeIndex < len) {
-            while (++currentPrimeIndex < len) {
-                if (sieve[currentPrimeIndex]) {
-                    ++currentNthPrime;
-                    currentPrime = (currentPrimeIndex << 1) + 3;
-                    return currentPrime;
-                }
+        while (++currentPrimeIndex < sieve.length) {
+            if (sieve[currentPrimeIndex]) {
+                return (currentPrimeIndex << 1) + 3;
             }
         }
-
-        //-1 is only returns when the end of the sieve has been reached
         return -1;
-    }
-
-    /**
-     * Returns the next prime in the sieve. It's an iterator along with .previousPrime().
-     * <p>
-     * Using them is more efficient than .nthPrime(int n) if you are accessing the primes array a lot.
-     * <p>
-     * Other methods related to this includes .currentIndexOfPrime() and .currentPrime().
-     * <p>
-     * Note: if you use .previousPrime() until the end of the sieve (the method will return -1) and then call
-     * this, the first prime (2) will be returned.
-     *
-     * @return the next prime. This is -1 if the end of the sieve had been reached
-     */
-    @Override
-    public int previousPrime() {
-        //if the there is a previous prime bigger than 2 (currentPrimeIndex > 0), find the previous prime
-        if (currentPrimeIndex > 0) {
-            while (--currentPrimeIndex >= 0) {
-                if (sieve[currentPrimeIndex]) {
-                    --currentNthPrime;
-                    currentPrime = (currentPrimeIndex << 1) + 3;
-                    return currentPrime;
-                }
-            }
-        }
-
-        //if the currentIndex is 0, then the previous prime would be 2
-        else if (currentPrimeIndex == 0) {
-            currentPrimeIndex = -2;
-            currentNthPrime = 1;
-            currentPrime = 2;
-            return 2;
-        }
-
-        //this only returns when the beginning of the sieve has been reached
-        return -1;
-    }
-
-    /**
-     * The current prime's position among the primes. (e.g. 2 returns 1 b/c it's the 1st prime, 3 returns 2, etc.)
-     *
-     * @return the prime's position among the primes
-     */
-    @Override
-    public int indexOfCurrentPrime() {
-        return currentNthPrime;
-    }
-
-    /**
-     * Returns the current prime the iteration cursor is on.
-     *
-     * @return the current prime
-     */
-    @Override
-    public int currentPrime() {
-        return currentPrime;
-    }
-
-    /**
-     * Set the iteration cursor used by .nextPrime() and .previousPrime() to the beginning.
-     * <p>
-     * After calling this method, .nextPrime() would return 2, .previousPrime() would return -1,
-     * .currentPrime() would return 0 and .currentPrimeIndex() would return 0.
-     */
-    @Override
-    public void resetIteration() {
-        currentPrime = 0;
-        currentNthPrime = 0;
-        currentPrimeIndex = -2;
     }
 }
