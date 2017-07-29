@@ -6,11 +6,12 @@ public class EulerMain {
     public static void main(String[] args) {
         PrimeSearcher sieve = new BitEratosthenesSieve(300000000);
         System.out.println(sieve.numberOfPrimesFound());
-        sieve = new EratosthenesSieve(300000000);
-        System.out.println(sieve.numberOfPrimesFound());
+        PrimeSearcher sieve2 = new EratosthenesSieve(300000000);
+        System.out.println(sieve2.numberOfPrimesFound());
         System.out.println("*************************");
 
         long START, END, k;
+        int prime, prime2;
 
         START = System.currentTimeMillis();
         sieve = new EratosthenesSieve(300000000);
@@ -18,32 +19,26 @@ public class EulerMain {
         System.out.println("Time: " + (END - START) + "ms");
         System.out.println(sieve.numberOfPrimesFound());
 
-        k = 0;
         START = System.currentTimeMillis();
-        for (int i = 0; i < 300000000; i++) {
-            if (sieve.isPrime(i)) {
-                k++;
-            }
+        prime = sieve.firstPrime();
+        while (prime != -1) {
+            prime = sieve.nextPrime();
         }
         END = System.currentTimeMillis();
         System.out.println("Time: " + (END - START) + "ms");
-        System.out.println(k);
 
-        k = 0;
         START = System.currentTimeMillis();
-        for (int i = 0; i < 300000000; i++) {
-            if (sieve.isPrimeUnsafe(i)) {
-                k++;
-            }
+        sieve2 = new BitEratosthenesSieve(300000000);
+        END = System.currentTimeMillis();
+        System.out.println("Time: " + (END - START) + "ms");
+        System.out.println(sieve2.numberOfPrimesFound());
+
+        START = System.currentTimeMillis();
+        prime = sieve2.firstPrime();
+        while (prime != -1) {
+            prime = sieve2.nextPrime();
         }
         END = System.currentTimeMillis();
         System.out.println("Time: " + (END - START) + "ms");
-        System.out.println(k);
-
-        START = System.currentTimeMillis();
-        sieve = new BitEratosthenesSieve(300000000);
-        END = System.currentTimeMillis();
-        System.out.println("Time: " + (END - START) + "ms");
-        System.out.println(sieve.numberOfPrimesFound());
     }
 }
