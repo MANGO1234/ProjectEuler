@@ -10,66 +10,66 @@ import java.util.BitSet;
  */
 public class BitEratosthenesSieve implements PrimeSearcher {
 
-    //sieve: holds the sieve of boolean value for primes
+    // sieve: holds the sieve of boolean value for primes
     // ** The sieve indexes correspond to odd numbers starting with 3.
     //    e.g. index 0 is the number 3, index 1 is the number 5, etc.
     //    To convert an index to the number it represents, multiply it by 2 then add 3.
     private BitSet sieve;
 
-    //sieveSize: the size of the sieve it represents
-    //numberOfPrimeInSieve: number of primes found
-    //actualSieveSize: b/c BitSieve has a capacity (e.g. uses 64 bit as returned by .size() when ask only for
-    //49 bit of storage), this will be used to store the actual amount of bits use in BitSet
+    // sieveSize: the size of the sieve it represents
+    // numberOfPrimeInSieve: number of primes found
+    // actualSieveSize: b/c BitSieve has a capacity (e.g. uses nearest multiple of 64)
+    // this will be used to store the actual amount of bits use in BitSet
     private int sieveSize = 0,
             numOfPrimesInSieve = 0,
             actualSieveSize = 0;
 
     /**
-     * Creates a EratosthenesSieve up to n. n is minimum 100.
+     * Creates a EratosthenesSieve up to n. n is minimum 10.
      * <p>
-     * If n is smaller or equal to 100, this will use 100 as the value of n.
+     * If n is smaller than 10, this will use 10 as the value of n.
      *
      * @param n the size of the sieve to be constructed
      */
     public BitEratosthenesSieve(int n) {
-        if (n < 10)
-            n = 10;
-        createSieve(n);
+        createSieve(n < 10 ? 10 : n);
     }
 
     /**
      * Returns the nth prime.
      * <p>
-     * This will return -1 if the sieve is not large enough to contain the nth prime. In that case, you can
-     * try increasing the sieve's size with .expandSearchUpTo(int n).
+     * This will return -1 if the sieve is not large enough to contain the nth prime.
+     * In that case, you can try increasing the sieve's size with .expandSearchUpTo(int n).
      * <p>
-     * Note: this is inefficient and slower than using .nextPrime() and .previousPrime() in looping, so use
-     * them instead if you need performance
+     * Note: this is inefficient and slower than using .firstPrime() and .nextPrime()
      *
      * @param n
      * @return the nth prime
      */
     @Override
     public int nthPrime(int n) {
-        if (n < 1 || n > numOfPrimesInSieve)
-            return -1; //n need to be within 0 and numOfPrimesInSieve
-        if (n == 1)
-            return 2;                            //account manually for n = 1 which returns 2
-
-        for (int index = -1, len = actualSieveSize, count = 1 /* count = 1 for not including 2 in the array */; index < len; ) {
-            index = sieve.nextSetBit(index + 1);
-            if (++count >= n)
-                return (index << 1) + 3; //i * 2 + 3 to account for using only odd numbers from 3
+        if (n < 1 || n > numOfPrimesInSieve) {
+            return -1;
+        } else if (n == 1) {
+            return 2;
         }
-        return -1; //compiler demands this
+
+        int count = 1;
+        int index = sieve.nextSetBit(0);
+        do {
+            if (++count == n) {
+                return (index << 1) + 3;
+            }
+            index = sieve.nextSetBit(index + 1);
+        } while (true);
     }
 
     /**
      * Determines whether a number is prime.
      * <p>
-     * Note: If the number is larger than the sieve's size, a larger sieve will be automatically created to
-     * check whether it's prime or not. Note this can be very expensive. Recommend using PrimesUtil.isPrime()
-     * for more general purpose checking.
+     * Note: If the number is larger than the sieve's size, a larger sieve will be
+     * automatically created to check whether it's prime or not. Note this can be very
+     * expensive.
      *
      * @param n the number to be checked
      * @return a boolean value containing whether it's prime or not
@@ -77,19 +77,17 @@ public class BitEratosthenesSieve implements PrimeSearcher {
     @Override
     public boolean isPrime(int n) {
         //manually account for 2 and negative/even numbers
-        //**note: n & 1 is equivalent to n % 2 == 0, but much faster
-        if (n == 2)
-            return true;
-        else if ((n & 1) == 0 || n < 2)
+        if ((n & 1) == 0) {
+            return n == 2;
+        } else if (n < 2) {
             return false;
-
+        } else if (n <= sieveSize) {
             //if it's within the sieve, just return the value inside the sieve
-        else if (n <= sieveSize)
             return sieve.get((n >> 1) - 1);
-
+        } else {
             //otherwise, test primality using .testLargeNumber()
-        else
             return testLargeNumber(n);
+        }
     }
 
     /**
@@ -101,9 +99,9 @@ public class BitEratosthenesSieve implements PrimeSearcher {
      */
     @Override
     public void expandSearchUpTo(int n) {
-        if (n <= sieveSize)
-            return;
-        createSieve(n);
+        if (n > sieveSize) {
+            createSieve(n);
+        }
     }
 
     /**
@@ -137,7 +135,6 @@ public class BitEratosthenesSieve implements PrimeSearcher {
             primes[++count] = (index << 1) + 3;
             index = sieve.nextSetBit(index + 1);
         }
-        ;
         return primes;
     }
 
@@ -186,9 +183,9 @@ public class BitEratosthenesSieve implements PrimeSearcher {
         return true;
     }
 
-    //*******************************************************************************************************
-    //**********************************************Iteration************************************************
-    //*******************************************************************************************************
+    //**************************************************************************************
+    // ************************************ Iteration **************************************
+    // *************************************************************************************
     //this holds the informations for the iterator methods
     // * currentPrime: the current prime the iteration cursor is on
     // * Index: index the current prime is in the boolean array. Index represents 2 when it's -1.
