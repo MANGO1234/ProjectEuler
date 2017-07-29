@@ -10,9 +10,6 @@ public interface PrimeSearcher {
     int[] toArray();
 
     //iteration
+    int firstPrime();
     int nextPrime();
-    int previousPrime();
-    int indexOfCurrentPrime();
-    int currentPrime();
-    void resetIteration();
 }
