@@ -11,14 +11,16 @@ import java.util.Arrays;
  * @version 1.0
  */
 public class EratosthenesSieve implements PrimeSearcher {
-    //sieve: holds the sieve of boolean value for primes
+    // sieve: holds the sieve of boolean value for primes
     // ** The sieve indexes correspond to odd numbers starting with 3.
     //    e.g. index 0 is the number 3, index 1 is the number 5, etc.
     //    To convert an index to the number it represents, multiply it by 2 then add 3.
     private boolean[] sieve;
 
-    //sieveSize: the actual size the sieve represent, not sieve.length (if the sieve is size 100, sieve.length would be 49)
-    //numberOfPrimeInSieve: number of primes in the sieve (starting with 1 to account for the prime 2, see .countPrimes())
+    // sieveSize: the actual size the sieve represent, not sieve.length
+    // (if the sieve is size 100, sieve.length would be 49)
+    // numberOfPrimeInSieve: number of primes in the sieve (starting with 1 to
+    // account for the prime 2, see .countPrimes())
     private int sieveSize = 0,
             numOfPrimesInSieve = 1;
 
@@ -30,35 +32,35 @@ public class EratosthenesSieve implements PrimeSearcher {
      * @param n the size of the sieve to be constructed
      */
     public EratosthenesSieve(int n) {
-        if (n < 10) {
-            n = 10;
-        }
-        createSieveOfSize(n);
+        createSieveOfSize(n < 10 ? 10 : n);
     }
 
     /**
      * Returns the nth prime.
      * <p>
-     * This will return -1 if the sieve is not large enough to contain the nth prime. In that case, you can
-     * try increasing the sieve's size with .expandSearchUpTo(int n).
+     * This will return -1 if the sieve is not large enough to contain the nth prime.
+     * In that case, you can try increasing the sieve's size with .expandSearchUpTo(int n).
      * <p>
-     * Note: this is inefficient and slower than using .nextPrime() and .previousPrime() in looping, so use
-     * them instead if you need performance
+     * Note: this is inefficient and slower than using .firstPrime() and .nextPrime()
      *
      * @param n
      * @return the nth prime
      */
     @Override
     public int nthPrime(int n) {
-        if (n < 1 || n > numOfPrimesInSieve)
-            return -1; //n need to be within 0 and numOfPrimesInSieve
-        if (n == 1)
-            return 2;                            //account manually for n = 1 which returns 2
+        if (n < 1 || n > numOfPrimesInSieve) {
+            return -1;
+        } else if (n == 1) {
+            return 2;
+        }
 
-        for (int i = 0, len = sieve.length, count = 1 /* count = 1 for not including 2 in the array */; i < len; ++i) {
+        int count = 1;
+        int len = sieve.length;
+        for (int i = 0; i < len; ++i) {
             if (sieve[i]) {
-                if (++count >= n)
+                if (++count >= n) {
                     return (i << 1) + 3; //i * 2 + 3 to account for using only odd numbers from 3
+                }
             }
         }
         return -1; //compiler demands this
@@ -67,9 +69,9 @@ public class EratosthenesSieve implements PrimeSearcher {
     /**
      * Determines whether a number is prime.
      * <p>
-     * Note: If the number is larger than the sieve's size, a larger sieve will be automatically created to
-     * check whether it's prime or not. Note this can be very expensive. Recommend using PrimesUtil.isPrime()
-     * for more general purpose checking.
+     * Note: If the number is larger than the sieve's size, a larger sieve will be
+     * automatically created to check whether it's prime or not. Note this can be
+     * very expensive.
      *
      * @param n the number to be checked
      * @return a boolean value containing whether it's prime or not
@@ -78,18 +80,17 @@ public class EratosthenesSieve implements PrimeSearcher {
     public boolean isPrime(int n) {
         //manually account for 2 and negative/even numbers
         //**note: n & 1 is equivalent to n % 2 == 0, but much faster
-        if (n == 2)
-            return true;
-        else if ((n & 1) == 0 || n < 2)
+        if ((n & 1) == 0) {
+            return n == 2;
+        } else if (n < 2) {
             return false;
-
+        } else if (n <= sieveSize) {
             //if it's within the sieve, just return the value inside the sieve
-        else if (n <= sieveSize)
             return sieve[(n >> 1) - 1];
-
+        } else {
             //otherwise, test primality using .testLargeNumber()
-        else
             return testLargeNumber(n);
+        }
     }
 
     /**
@@ -101,9 +102,9 @@ public class EratosthenesSieve implements PrimeSearcher {
      */
     @Override
     public void expandSearchUpTo(int n) {
-        if (n <= sieveSize)
-            return;
-        createSieveOfSize(n);
+        if (n > sieveSize) {
+            createSieveOfSize(n);
+        }
     }
 
     /**
