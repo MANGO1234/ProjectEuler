@@ -9,3 +9,6 @@ __pycache__
 cython/*.pyd
 cython/*.c
 cython/build
+rust/Cargo.lock
+rust/target/
+rust/**/*.bk
