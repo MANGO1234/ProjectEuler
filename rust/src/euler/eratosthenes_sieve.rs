@@ -42,6 +42,17 @@ impl EratosthenesSieve {
         return false;
     }
 
+    pub fn get_vector_of_primes(&self) -> Vec<u64> {
+        let mut primes_vec = Vec::with_capacity(self.num_of_primes as usize);
+        primes_vec.push(2);
+        for (i, &b) in self.sieve.iter().enumerate() {
+            if b {
+                primes_vec.push((i * 2 + 3) as u64);
+            }
+        }
+        return primes_vec;
+    }
+
     pub fn as_vector_of_primes(&mut self) -> &Vec<usize> {
         if self.primes_vec.len() == 0 {
             self.primes_vec = Vec::with_capacity(self.num_of_primes as usize);
@@ -103,5 +114,9 @@ impl EratosthenesSieve {
             }
         }
         return true;
+    }
+
+    pub fn num_of_primes(&self) -> usize {
+        return self.num_of_primes;
     }
 }
