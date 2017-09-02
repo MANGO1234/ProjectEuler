@@ -1,5 +1,3 @@
-use euler::eratosthenes_sieve::*;
-
 const FACTORIALS: [u64; 21] = [
     1,
     1,
