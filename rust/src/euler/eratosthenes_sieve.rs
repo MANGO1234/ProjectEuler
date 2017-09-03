@@ -3,7 +3,7 @@ pub struct EratosthenesSieve {
     sieve: Vec<bool>,
     size: usize,
     num_of_primes: usize,
-    primes_vec: Vec<usize>,
+    primes_vec: Vec<u64>,
 }
 
 #[allow(dead_code)]
@@ -21,23 +21,23 @@ impl EratosthenesSieve {
         };
     }
 
-    pub fn is_prime(&self, n: usize) -> Option<bool> {
+    pub fn is_prime(&self, n: u64) -> Option<bool> {
         if n % 2 == 0 {
             return Option::Some(n == 2);
         } else if n < 2 {
             return Option::Some(false);
         }
-        if ((n / 2 - 1) as usize) < self.sieve.len() {
-            return Option::Some(self.sieve[(n / 2 - 1) as usize]);
+        if (n as usize / 2 - 1) < self.sieve.len() {
+            return Option::Some(self.sieve[n as usize / 2 - 1]);
         }
         return Option::None;
     }
 
-    pub fn is_prime_unsafe(&self, n: usize) -> bool {
+    pub fn is_prime_unsafe(&self, n: u64) -> bool {
         if n % 2 == 0 {
             return n == 2;
         } else if n > 2 {
-            return self.sieve[n / 2 - 1];
+            return self.sieve[n as usize / 2 - 1];
         }
         return false;
     }
@@ -53,13 +53,13 @@ impl EratosthenesSieve {
         return primes_vec;
     }
 
-    pub fn as_vector_of_primes(&mut self) -> &Vec<usize> {
+    pub fn as_vector_of_primes(&mut self) -> &Vec<u64> {
         if self.primes_vec.len() == 0 {
-            self.primes_vec = Vec::with_capacity(self.num_of_primes as usize);
+            self.primes_vec = Vec::with_capacity(self.num_of_primes);
             self.primes_vec.push(2);
             for (i, &b) in self.sieve.iter().enumerate() {
                 if b {
-                    self.primes_vec.push((i * 2 + 3));
+                    self.primes_vec.push(i as u64 * 2 + 3);
                 }
             }
         }
@@ -98,18 +98,15 @@ impl EratosthenesSieve {
         return (sieve, count);
     }
 
-    pub fn do_division_test(&mut self, n: usize) -> bool {
-        if n <= self.size {
+    pub fn do_division_test(&mut self, n: u64) -> bool {
+        if n <= self.size as u64 {
             return self.is_prime_unsafe(n);
         }
-        if n as usize > self.size * self.size {
+        if n > self.size as u64 * self.size as u64 {
             return false;
         }
         for p in self.as_vector_of_primes() {
-            if n as usize % p == 0 {
-                if n == 1117 {
-                    print!("ASSADASD {}", p);
-                }
+            if n % p == 0 {
                 return false;
             }
         }
