@@ -1,0 +1,14 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["mango12345"]
+
+[dependencies]
+
+[profile.release]
+#debug = true
+
+[profile.dev]
+opt-level = 3
+#opt-level = 3 just to turn overflow check on for instance, like release with debug
+#opt-level = 1 useful for debugging
