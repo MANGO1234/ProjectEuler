@@ -2,12 +2,11 @@
 mod euler;
 
 use euler::eratosthenes_sieve::EratosthenesSieve;
-use euler::math_utils::gcd;
 use std::cmp::max;
 use std::thread;
 use std::time::Instant;
 
-const M: u64 = 1000000000;
+const M : u64 = 1000000000;
 
 fn sum_smallest(n: u64) -> (u64, (Vec<u64>, Vec<u64>, Vec<u64>)) {
     let sqrt = (n as f64).sqrt() as u64;
@@ -61,66 +60,7 @@ fn main() {
     let start = Instant::now();
 
     dbg!(sum_smallest(100).0 % M);
-    let mut lcm = 1;
-    let mut next_lcm = 1;
-    let mut count = 0;
-    for i in 1..=31 {
-        let n = 1 << (2 * i);
-        lcm = lcm / gcd(lcm, i) * i;
-        next_lcm = next_lcm / gcd(next_lcm, i + 1) * (i + 1);
-        // (n - 1) / lcm + 1 give the correct count, but need to skip 1 (don't add 1) and N (subtract 2)
-        count += (n - 2) / lcm - (n - 2) / next_lcm;
-    }
-    dbg!(count);
-
-    let mut count_even = 0;
-    let mut count_odd = 0;
-    for n in 1..=177 {
-        let k: u64 = n + 1;
-        let mut t = (k * k) * (k + 1) * (k + 1) / 4 - k * k;
-        let t2 = t;
-        let mut count = 0;
-        while t % 2 == 0 {
-            count += 1;
-            t /= 2;
-        }
-        if k % 2 == 0 {
-            count_even += count
-        } else {
-            count_odd += count
-        };
-        println!(
-            "{} {} {} {}",
-            k,
-            if n < 13 { 6u64.pow(n as u32) } else { 0 },
-            t2,
-            count
-        );
-    }
-    dbg!(count_even);
-    dbg!(count_odd);
-
-    let mut count = 0;
-    for i in 2..=53 {
-        count += (100 + 1) / (1u64 << i) * 2;
-    }
-    dbg!(count);
-
-    let mut count = 0;
-    for i in 2..=53 {
-        count += (100 + 1) / (1u64 << i) * 2;
-    }
-    dbg!(count);
-
-    // let k = n + 1, then E(m, n)=(k*(k+1)/2)^m-k^m, then just consider odd and even to get
-    // k is even with j 2 factors, then there is (j - 1) * m
-    // k is odd with form 4j+1, then ((4j+1)+1)^m-1=>2j+1
-    const N: u64 = 10000000000000000;
-    let mut count = 0;
-    for i in 2..=53 {
-        count += (N + 1) / (1 << i);
-    }
-    dbg!(count);
+    dbg!(sum_smallest(1000000000000).0 % M);
 
     let end = Instant::now();
     let dur = end - start;

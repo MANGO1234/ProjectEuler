@@ -28,3 +28,53 @@ pub fn factorial(n: u32) -> u64 {
     }
     return FACTORIALS[n as usize];
 }
+
+pub fn gcd(a: u64, b: u64) -> u64 {
+    // using Euclidean algorithm
+    let mut a = a;
+    let mut b = b;
+    while b != 0 {
+        let temp = a;
+        a = b;
+        b = temp % a;
+    }
+    return a;
+}
+
+// keep here for modification according to problem
+// f(x,p_i)=f(x,p_(i-1))+f(x/p_i, p_(i-1))
+// f[x.binary_search(&k).unwrap()] to find number of primes below k
+// where k <= floor(sqrt(n)) or k = floor(n/m) where m<=sqrt(n)
+fn count_primes(n: u64) -> (u64, (Vec<u64>, Vec<u64>)) {
+    let sqrt = (n as f64).sqrt() as u64;
+    let mut x = Vec::with_capacity(sqrt as usize * 2);
+    let mut f = Vec::with_capacity(sqrt as usize * 2);
+    for i in 0..sqrt {
+        x.push(i + 1);
+        f.push(i);
+    }
+    let start = if n / sqrt == sqrt { 1 } else { 0 };
+    for i in start..sqrt {
+        x.push(n / (sqrt - i));
+        f.push(n / (sqrt - i) - 1);
+    }
+    let end = f.len();
+    for i in 1..sqrt as usize {
+        let p = i + 1;
+        if f[i] != f[i - 1] {
+            let mut j = f.len() - 1;
+            while x[j] >= (p * p) as u64 {
+                // find x[k] = j / p
+                let d = x[j] / p as u64;
+                let k = if d <= sqrt {
+                    d as usize - 1
+                } else {
+                    end - (end - j) * p as usize
+                };
+                f[j] -= f[k] - f[i - 1];
+                j -= 1;
+            }
+        }
+    }
+    return (f[f.len() - 1], (x, f));
+}
