@@ -78,3 +78,30 @@ fn count_primes(n: u64) -> (u64, (Vec<u64>, Vec<u64>)) {
     }
     return (f[f.len() - 1], (x, f));
 }
+
+/**
+ * Return n^pow mod m using fast exponentiation. Doesn't do any overflow check.
+ *
+ * @param n
+ * @param pow
+ * @param m
+ * @return n^pow mod m
+ */
+pub fn pow_mod(n: u32, pow: u64, m: u32) -> u64 {
+    let m = m as u64;
+    let mut ans = 1u64;
+    let mut temp = n as u64;
+    let mut pow = pow;
+    while pow != 0 {
+        if pow & 1 == 1 {
+            ans = (ans * temp) % m;
+        }
+        temp = temp * temp % m;
+        pow >>= 1;
+    }
+    return ans % m;
+}
+
+pub fn mod_inv(n: u32, m: u32) -> u64 {
+    return pow_mod(n, m as u64 - 2, m);
+}
