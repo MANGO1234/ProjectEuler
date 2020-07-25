@@ -1,3 +1,6 @@
+#[cfg(feature = "bigint")]
+use num::BigInt;
+
 const FACTORIALS: [u64; 21] = [
     1,
     1,
@@ -27,6 +30,39 @@ pub fn factorial(n: u32) -> u64 {
         return 0;
     }
     return FACTORIALS[n as usize];
+}
+
+#[cfg(feature = "bigint")]
+pub fn factorial_big(n: u64) -> BigInt {
+    if n <= 20 {
+        return BigInt::from(FACTORIALS[n as usize]);
+    }
+    let mut t = BigInt::from(FACTORIALS[20]);
+    for i in 21..=n {
+        t *= i;
+    }
+    t
+}
+
+pub fn n_c_r(mut n: u64, r: u64) -> u64 {
+    let mut a = 1;
+    for i in 1..=r {
+        a *= n;
+        a /= i;
+        n -= 1;
+    }
+    a
+}
+
+#[cfg(feature = "bigint")]
+pub fn n_c_r_big(mut n: u64, r: u64) -> BigInt {
+    let mut a = BigInt::from(1u64);
+    for i in 1..=r {
+        a *= n;
+        a /= i;
+        n -= 1;
+    }
+    a
 }
 
 pub fn gcd(a: u64, b: u64) -> u64 {
