@@ -141,3 +141,58 @@ pub fn pow_mod(n: u32, pow: u64, m: u32) -> u64 {
 pub fn mod_inv(n: u32, m: u32) -> u64 {
     return pow_mod(n, m as u64 - 2, m);
 }
+
+pub struct CombinationGenerator<T> {
+    a: Vec<T>,
+    next: Vec<usize>,
+    done_iter: bool,
+    seed: Vec<Vec<T>>,
+}
+
+impl<T: Copy> CombinationGenerator<T> {
+    pub fn new(seed: Vec<Vec<T>>) -> CombinationGenerator<T> {
+        CombinationGenerator {
+            a: seed.iter().map(|x| x[0]).collect(),
+            next: vec![0; seed.len()],
+            done_iter: false,
+            seed,
+        }
+    }
+
+    pub fn reset(&mut self) {
+        self.done_iter = false;
+        for i in 0..self.seed.len() {
+            self.a[i] = self.seed[i][0];
+        }
+    }
+
+    pub fn next(&mut self) -> Option<&Vec<T>> {
+        if self.done_iter {
+            return None;
+        }
+        if self.next[0] < self.seed[0].len() {
+            self.a[0] = self.seed[0][self.next[0]];
+            self.next[0] += 1;
+            return Some(&self.a);
+        }
+        self.next[0] = 1;
+        self.a[0] = self.seed[0][0];
+        let mut start = 1;
+        loop {
+            if start >= self.seed.len() {
+                self.done_iter = true;
+                return None;
+            }
+            self.next[start] += 1;
+            if self.next[start] >= self.seed[start].len() {
+                self.next[start] = 0;
+                self.a[start] = self.seed[start][0];
+            } else {
+                self.a[start] = self.seed[start][self.next[start]];
+                break;
+            }
+            start += 1;
+        }
+        return Some(&self.a);
+    }
+}
