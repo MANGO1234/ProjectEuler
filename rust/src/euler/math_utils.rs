@@ -1,5 +1,9 @@
+use crate::EratosthenesSieve;
+use num::integer::Roots;
 #[cfg(feature = "bigint")]
 use num::BigInt;
+use once_cell::sync::Lazy;
+use std::sync::{Mutex, MutexGuard};
 
 const FACTORIALS: [u64; 21] = [
     1,
@@ -195,4 +199,56 @@ impl<T: Copy> CombinationGenerator<T> {
         }
         return Some(&self.a);
     }
+}
+
+static PRIME_SEARCHER: Lazy<Mutex<EratosthenesSieve>> =
+    Lazy::new(|| Mutex::new(EratosthenesSieve::new(100)));
+
+fn make_sure_there_is_enough_prime_to_do_primality_test(
+    x: &mut MutexGuard<EratosthenesSieve>,
+    num: u64,
+) {
+    if num as usize > x.size * x.size {
+        x.expand_to_size(num.sqrt() as usize + 1);
+    }
+}
+
+/**
+ * Returns all the unique prime factors of a number in an integer array, sorted.
+ *
+ * Example: 480 -> [2, 3, 5] even though it's prime factorization is 2^5 * 3 * 5
+ * @param num
+ * @return a sorted integer array containing all the prime factors of num
+ */
+pub fn unique_prime_factors_of(mut num: u64) -> Vec<u64> {
+    //if it's within range of prime_searcher and is a prime (so as not to trigger an expensive call from
+    //.isPrime() or smaller than 2
+    let mut prime_searcher = PRIME_SEARCHER.lock().unwrap();
+    if num < prime_searcher.size as u64 && prime_searcher.is_prime_unsafe(num) {
+        return vec![num];
+    } else if num < 2 {
+        return vec![];
+    }
+
+    make_sure_there_is_enough_prime_to_do_primality_test(&mut prime_searcher, num);
+
+    let mut factors = Vec::new();
+    let mut i = 0usize; //keep track of primes index
+    let primes = prime_searcher.as_vector_of_primes();
+    while num != 1 && i < primes.len() {
+        let temp_prime = primes[i];
+        i += 1;
+        if num % temp_prime == 0 {
+            factors.push(temp_prime);
+            num /= temp_prime;
+            //loop through until there is no more multiples of this prime factor
+            while num % temp_prime == 0 {
+                num /= temp_prime;
+            }
+        }
+    }
+    if num != 1 {
+        factors.push(num);
+    }
+    return factors;
 }

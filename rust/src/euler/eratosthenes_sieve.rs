@@ -1,7 +1,7 @@
 #[allow(dead_code)]
 pub struct EratosthenesSieve {
     sieve: Vec<bool>,
-    size: usize,
+    pub size: usize,
     num_of_primes: usize,
     primes_vec: Vec<u64>,
 }
