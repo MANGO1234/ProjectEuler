@@ -1,0 +1,23 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["mango12345"]
+edition = "2018"
+
+[dependencies]
+num = { version = "0.3", optional = true }
+itertools = "0.9.0"
+once_cell = "1.8.0"
+
+[features]
+bigint = ["num"]
+
+[profile.release]
+overflow-checks = true
+debug = true
+
+[profile.dev]
+opt-level = 3
+overflow-checks = true
+#opt-level = 3 just for e.g. overflow check on for instance, like release with debug
+#opt-level = 1 useful for debugging

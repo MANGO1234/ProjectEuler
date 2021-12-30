@@ -29,8 +29,9 @@ fn main() {
     let primes = sieve.get_vector_of_primes();
     let mut c = 0;
     for &p in &primes[1..] {
-        if p % 8 != 1 && p % 8 != 7 {
+        if pow_mod(((p + 1) / 2) as u32, (p - 1) / 2, p as u32) != 1 {
             continue;
+            // dbg!(p);
         }
         let mut rec = find_quad_recip(p);
         assert!(rec * rec % p == (p + 1) / 2);
